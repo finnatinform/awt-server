@@ -6,7 +6,7 @@ var sqlite3 = require('sqlite3').verbose();
 var DataBase = new sqlite3.Database('./data/server.db');
 /* SERVICES */
 var UserService = require('./services/user-service');
-var AdminService = require('./services/admin-service');
+var DatabaseService = require('./services/database-service');
 
 /* IMPLEMENTATION OF CALLS */
 app.get('/:event/users/add', function ( _Request, _Response) {
@@ -18,11 +18,14 @@ app.get('/:event/users/list', function ( _Request, _Response) {
 })
 
 app.get('/admin/database/build', function ( _Request, _Response) {
-    _Response.end(AdminService.BuildDatabase( DataBase));
+    _Response.end();
 })
 
 /* TEST */
 // --
+
+/* BUILD UP DATABASE */
+DatabaseService.BuildDatabase(DataBase) ;
 
 /* RUNNING SERVER */
 var server = app.listen(8081, function () {
