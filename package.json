@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/finnatinform/awt-server#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "sqlite3": "^3.1.8"
   }

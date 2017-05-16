@@ -5,7 +5,7 @@ module.exports = {
             // Create FAIRS Table
             _Database.run("CREATE TABLE if not exists FAIRS (IDENT TEXT PRIMARY KEY NOT NULL UNIQUE, CAPTION TEXT, START_DATE TEXT, END_DATE TEXT)");
             // Create REFERENTS Table
-            _Database.run("CREATE TABLE if not exists FAIRS (IDENT INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, FORE_NAME TEXT, SURE_NAME TEXT)");
+            _Database.run("CREATE TABLE if not exists REFERENTS (IDENT INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, FORE_NAME TEXT, SURE_NAME TEXT)");
             // Create COMPANIES Table
             _Database.run("CREATE TABLE if not exists COMPANIES (IDENT INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, SHORT_NAME TEXT UNIQUE, CAPTION TEXT)");
             // Create USERS Table
