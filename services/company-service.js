@@ -6,7 +6,7 @@ module.exports = {
         }
         _DataBase.serialize(
             function(){
-                _DataBase.run("INSERT INTO COMPANIES (SHORT_NAME,CAPTION) VALUES (?,?)", [ _Referent.SHORT_NAME, _Referent.CAPTION ], function(_Error){
+                _DataBase.run("INSERT INTO COMPANIES (SHORT_NAME,CAPTION) VALUES (?,?)", [ _Company.SHORT_NAME, _Company.CAPTION ], function(_Error){
                     var HResult = "";
                     if(_Error === null){
                         HResult = 'success';

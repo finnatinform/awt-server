@@ -31,7 +31,7 @@ app.post('/fairs/add', function( _Request, _Response){
     });
 });
 app.post('/companies/add', function( _Request, _Response){
-    var HResult = CompanyService.addFair(DataBase,_Request.body, function(_Success){
+    var HResult = CompanyService.addCompany(DataBase,_Request.body, function(_Success){
         _Response.end(_Success);
     });
 });
