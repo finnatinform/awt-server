@@ -35,6 +35,11 @@ app.post('/companies/add', function( _Request, _Response){
         _Response.end(_Success);
     });
 });
+app.post('/users/add', function( _Request, _Response){
+    var HResult = UserService.addCompany(DataBase,_Request.body, function(_Success){
+        _Response.end(_Success);
+    });
+});
 
 /* BUILD UP DATABASE */
 DatabaseService.BuildDatabase(DataBase) ;
