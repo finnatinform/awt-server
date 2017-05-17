@@ -9,34 +9,31 @@ var DataBase = new sqlite3.Database('./data/server.db');
 /* SERVICES */
 var UserService = require('./services/user-service');
 var DatabaseService = require('./services/database-service');
+var EventService = require('./services/event-service');
+var ReferentService = require('./services/referent-service');
+var FairService = require('./services/fair-service');
+var CompanyService = require('./services/company-service');
 
 /* IMPLEMENTATION OF CALLS */
-app.post('/users/add', function( _Request, _Response){
-    console.log(_Request.body);
-    _Response.end(_Request.body.key);
+app.post('/events/add', function( _Request, _Response){
+    var HResult = EventService.addEvent(DataBase, _Request.body, function(_Success){
+        _Response.end(_Success);
+    });
 });
-
-app.get('/events', function( _Request, _Response){
-    var HResult = [] ;
-    HResult.push(
-        {
-            IDENT: 1001 ,
-            CAPTION: "How to Work with FELIOS" ,
-            PLACE: "Saal Bruessel",
-            DESCRIPTION: "Lorem Ipsum Dorem 123",
-            START_DATE: "16/05/2017-21:36:00"
-        }
-    );
-        HResult.push(
-        {
-            IDENT: 1001 ,
-            CAPTION: "How to Work with SPE" ,
-            PLACE: "Saal Berlin",
-            DESCRIPTION: "Lorem Ipsum Dorem 123",
-            START_DATE: "16/05/2017-21:36:00"
-        }
-    );
-    _Response.end(JSON.stringify(HResult));
+app.post('/referents/add', function( _Request, _Response){
+    ReferentService.addReferent(DataBase,_Request.body, function(_Success){
+        _Response.end(_Success);
+    });
+});
+app.post('/fairs/add', function( _Request, _Response){
+    var HResult = FairService.addFair(DataBase,_Request.body, function(_Success){
+        _Response.end(_Success);
+    });
+});
+app.post('/companies/add', function( _Request, _Response){
+    var HResult = CompanyService.addFair(DataBase,_Request.body, function(_Success){
+        _Response.end(_Success);
+    });
 });
 
 /* BUILD UP DATABASE */
