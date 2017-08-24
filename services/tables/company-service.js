@@ -73,7 +73,7 @@ module.exports = {
             _Callback('error');
             return;
         }
-        _DataBase.all("SELECT count(*) FROM COMPANIES WHERE SHORT_NAME=?", [_KeyObject.UNLOCK_KEY], function (_Error, _Rows) {
+        _DataBase.all("SELECT * FROM COMPANIES WHERE SHORT_NAME=?", [_KeyObject.UNLOCK_KEY], function (_Error, _Rows) {
             var HResult = "";
             if (_Error === null) {
                 if (_Rows.length == 0) {
