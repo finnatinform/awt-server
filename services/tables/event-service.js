@@ -78,7 +78,7 @@ module.exports = {
 
     },
     listEvents(_DataBase, _Callback) {
-        _DataBase.all("SELECT E.*, R.FORE_NAME,R.SURE_NAME, (case when L.USER_IDENT ISNULL then 0 else 1 end) as USER_HAS_RESERVED FROM EVENTS as E ON E.REFERENT_IDENT = R.IDENT LEFT JOIN REFERENTS as R LEFT JOIN USERS_EVENTS_LINK as L ON E.IDENT=L.EVENT_IDENT", [], function (_Error, _EventRows) {
+        _DataBase.all("SELECT E.*, R.FORE_NAME,R.SURE_NAME, (case when L.USER_IDENT ISNULL then 0 else 1 end) as USER_HAS_RESERVED FROM EVENTS as E LEFT JOIN REFERENTS as R ON E.REFERENT_IDENT = R.IDENT LEFT JOIN USERS_EVENTS_LINK as L ON E.IDENT=L.EVENT_IDENT", [], function (_Error, _EventRows) {
             _Callback(_Error, _EventRows);
         });
     },
