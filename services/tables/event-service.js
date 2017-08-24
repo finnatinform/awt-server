@@ -78,12 +78,12 @@ module.exports = {
 
     },
     listEvents(_DataBase, _Callback) {
-        _DataBase.all("SELECT E.*, R.FORE_NAME,R.SURE_NAME FROM EVENTS as E LEFT JOIN REFERENTS as R ON E.REFERENT_IDENT = R.IDENT", [], function (_Error, _EventRows) {
+        _DataBase.all("SELECT E.*, R.FORE_NAME,R.SURE_NAME, COALESCE(L.USER_IDENT,0) as USER_HAS_RESERVED FROM EVENTS as E LEFT JOIN REFERENTS as R LEFT JOIN USERS_EVENTS_LINK as L ON E.REFERENT_IDENT = R.IDENT AND E.IDENT=L.EVENT_IDENT", [], function (_Error, _EventRows) {
             _Callback(_Error, _EventRows);
         });
     },
     listEventsForUser(_DataBase, _UserObject, _Callback) {
-        _DataBase.all("SELECT * FROM USERS_EVENTS_LINK as L LEFT JOIN EVENTS as E ON L.EVENT_IDENT = E.IDENT AND L.USER_IDENT=? OR E.CAN_BE_RESERVED = 0", [_UserObject.IDENT], function (_Error, _EventRows) {
+        _DataBase.all("SELECT L.* FROM USERS_EVENTS_LINK as L LEFT JOIN EVENTS as E ON L.EVENT_IDENT = E.IDENT AND L.USER_IDENT=? OR E.CAN_BE_RESERVED = 0", [_UserObject.IDENT], function (_Error, _EventRows) {
             _Callback(_Error, _EventRows);
         });
     },
