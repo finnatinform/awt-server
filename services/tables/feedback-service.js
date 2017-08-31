@@ -1,26 +1,26 @@
+var moment = require('moment');
+
 module.exports = {
     addFeedback( _DataBase , _Feedback, _Callback ){
-        if(_Event==null){
+        if(_Feedback==null){
+            console.log('error');
             _Callback('error');
             return ;
         }
         _DataBase.serialize(
             function(){
-                _DataBase.run("INSERT INTO FEEDBACK (HOW_GOOD,USER_IDENT,DATE,EVENT_IDENT) VALUES (?,?,?,?)", [ _Feedback.HOW_GOOD, _Feedback.USER_IDENT, _Date.now(), _Feedback.EVENT_IDENT ], function(_Error){
+                _DataBase.run("INSERT INTO FEEDBACKS (RATING,USER_IDENT,EVENT_IDENT,FEEDBACK_DATE) VALUES (?,?,?,?)", [ _Feedback.RATING, _Feedback.USER_IDENT, _Feedback.EVENT_IDENT, moment().format("DD.MM.YYYY HH:mm") ], function(_Error){
                     var HResult = "";
                     if(_Error === null){
                         HResult = 'success';
                     } else {
                         HResult = "error";
+                        console.log(JSON.stringify(_Error));
                     }
+                    console.log(HResult);
                     _Callback(HResult);     
                 });
             }
         );      
-    },
-    getFeedback( _DataBase, _User, _Event, _Callback ){
-        _DataBase.all("SELECT * FROM FEEDBACK WHERE USER_IDENT = ? AND EVENT_IDENT = ?", [ _User, _Event ] , function(_Error, _Rows) {  
-            _Callback(_Error, _Rows);
-        });  
     }
 }

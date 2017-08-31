@@ -1,6 +1,7 @@
 module.exports = {
     addReferent(_DataBase, _Referent, _Callback){
         if(_Referent.FORE_NAME==="" || _Referent.SURE_NAME===""){
+            console.log('error');
             _Callback('error');
             return ;
         }
@@ -13,6 +14,7 @@ module.exports = {
                     } else {
                         HResult = "error";
                     }
+                    console.log(HResult);
                     _Callback(HResult);     
                 });
             }
@@ -20,6 +22,7 @@ module.exports = {
     },
     changeReferent(_DataBase, _Referent, _Callback){
         if(_Referent.FORE_NAME==="" || _Referent.SURE_NAME===""){
+            console.log('error');
             _Callback('error');
             return ;
         }
@@ -31,8 +34,8 @@ module.exports = {
                         HResult = 'success';
                     } else {
                         HResult = "error";
-                        console.log(JSON.stringify(_Error));
                     }
+                    console.log(HResult);
                     _Callback(HResult);  
                 });
             }
@@ -41,6 +44,7 @@ module.exports = {
     },
     deleteReferent(_DataBase, _Referent, _Callback){
         if(_Referent.IDENT===""){
+            console.log('error');
             _Callback('error');
             return ;
         }
@@ -53,8 +57,8 @@ module.exports = {
                         HResult = 'success';
                     } else {
                         HResult = "error";
-                        console.log(JSON.stringify(_Error));
                     }
+                    console.log(HResult);
                     _Callback(HResult);  
                 });
             }

@@ -1,6 +1,7 @@
 module.exports = {
     addCompany(_DataBase, _Company, _Callback) {
         if (_Company.SHORT_NAME === "" || _Company.CAPTION === "") {
+            console.log('error');
             _Callback('error');
             return;
         }
@@ -13,6 +14,7 @@ module.exports = {
                     } else {
                         HResult = "error";
                     }
+                    console.log(HResult);
                     _Callback(HResult);
                 });
             }
@@ -21,6 +23,7 @@ module.exports = {
     },
     changeCompany(_DataBase, _Company, _Callback) {
         if (_Company.SHORT_NAME === "" || _Company.CAPTION === "") {
+            console.log('error');
             _Callback('error');
             return;
         }
@@ -33,8 +36,8 @@ module.exports = {
                         HResult = 'success';
                     } else {
                         HResult = "error";
-                        console.log(JSON.stringify(_Error));
                     }
+                    console.log(HResult);
                     _Callback(HResult);
                 });
             }
@@ -43,6 +46,7 @@ module.exports = {
     },
     deleteCompany(_DataBase, _Company, _Callback) {
         if (_Company.SHORT_NAME === "" || _Company.CAPTION === "") {
+            console.log('error');
             _Callback('error');
             return;
         }
@@ -55,8 +59,8 @@ module.exports = {
                         HResult = 'success';
                     } else {
                         HResult = "error";
-                        console.log(JSON.stringify(_Error));
                     }
+                    console.log(HResult);
                     _Callback(HResult);
                 });
             }
@@ -70,6 +74,7 @@ module.exports = {
     },
     checkCompany(_DataBase, _KeyObject, _Callback) {
         if (_KeyObject.UNLOCK_KEY === "") {
+            console.log('error');
             _Callback('error');
             return;
         }
@@ -84,6 +89,7 @@ module.exports = {
             } else {
                 HResult = "error";
             }
+            console.log(HResult);
             _Callback(HResult);
         });
     },
