@@ -220,6 +220,22 @@ app.get('/notifications/list', function ( _Request, _Response) {
         _Response.end(HResult);
     });
 });
+app.post('/notifications/list', function ( _Request, _Response) {
+    console.log('listNotificationsForUser');
+    console.log(_Request.body);
+    PushService.listAllNotificationsForUser(DataBase,_Request.body,function( _Error, _Result ){
+        var HResult = "" ;
+        if( _Error ){
+            console.log('error');
+            HResult = "error";
+        } else {
+            console.log('success');
+            HResult = JSON.stringify(_Result);
+        }
+        _Response.end(HResult);
+    });
+});
+
 app.delete('/referents/delete', function( _Request, _Response){
     console.log('deleteReferent');
     console.log(_Request.body);
