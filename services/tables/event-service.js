@@ -82,14 +82,21 @@ module.exports = {
                 _DataBase.run("DELETE FROM EVENTS WHERE IDENT=?", [_Event.IDENT], function (_Error) {
                     if (_Error === null) {
                         _DataBase.run("DELETE FROM NOTIFICATIONS WHERE EVENT_IDENT=?", [_Event.IDENT], function (_Error) {
-                            var HResult = "";
                             if (_Error === null) {
-                                HResult = 'success';
+                                _DataBase.run("DELETE FROM USER_EVENT_LINKS WHERE EVENT_IDENT=?", [_Event.IDENT], function (_Error) {
+                                    var HResult = "";
+                                    if (_Error === null) {
+                                        HResult = 'success';
+                                    } else {
+                                        HResult = "error";
+                                    }
+                                    console.log(HResult);
+                                    _Callback(HResult);
+                                });
                             } else {
-                                HResult = "error";
+                                console.log('error');
+                                _Callback('error');
                             }
-                            console.log(HResult);
-                            _Callback(HResult);
                         });
                     } else {
                         console.log('error');
