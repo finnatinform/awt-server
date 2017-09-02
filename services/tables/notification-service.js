@@ -11,7 +11,7 @@ module.exports = {
         _DataBase.serialize(
             function(){
                 _DataBase.run("INSERT INTO NOTIFICATIONS (CAPTION, DESCRIPTION, START_DATE, EVENT_IDENT, LAST_EDITED,BY_EVENT) VALUES (?,?,?,?,?,0)", 
-                    [ _Notification.CAPTION, _Notification.DESCRIPTION, _Notification.DATE, _Notification.EVENT_IDENT, moment().format("DD.MM.YYYY HH:mm") ], function(_Error){
+                    [ _Notification.CAPTION, _Notification.DESCRIPTION, _Notification.START_DATE, _Notification.EVENT_IDENT, moment().format("DD.MM.YYYY HH:mm") ], function(_Error){
                     
                     var HResult = "";
                     if(_Error === null){

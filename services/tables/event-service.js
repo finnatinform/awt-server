@@ -112,6 +112,11 @@ module.exports = {
             _Callback(_Error, _EventRows);
         });
     },
+    listBreakoutSession(_DataBase, _UserObject, _Callback) {
+        _DataBase.all("SELECT E.*, R.FORE_NAME,R.SURE_NAME, (case when L.USER_IDENT ISNULL then 0 else 1 end) as USER_HAS_RESERVED, COALESCE(F.RATING,-1) as RATING FROM EVENTS as E LEFT JOIN REFERENTS as R ON E.REFERENT_IDENT = R.IDENT LEFT JOIN USERS_EVENTS_LINK as L ON ( E.IDENT=L.EVENT_IDENT AND L.USER_IDENT=? ) LEFT JOIN FEEDBACKS as F ON ( F.EVENT_IDENT=E.IDENT AND F.USER_IDENT=? ) WHERE E.START_DATE=? AND E.CAN_BE_RESERVED=1", [_UserObject.IDENT, _UserObject.IDENT,_UserObject.START_DATE], function (_Error, _EventRows) {
+            _Callback(_Error, _EventRows);
+        });
+    },
     listEventsForAdmin(_DataBase, _Callback) {
         _DataBase.all("SELECT * FROM EVENTS AS E", [], function (_Error, _EventRows) {
             _Callback(_Error, _EventRows);

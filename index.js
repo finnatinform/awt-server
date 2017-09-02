@@ -106,6 +106,22 @@ app.post('/events/list', function ( _Request, _Response) {
         _Response.end(HResult);
     });
 });
+app.post('/events/listbreakout', function ( _Request, _Response) {
+    console.log('listbreakout');
+    console.log(_Request.body);
+    EventService.listBreakoutSession(DataBase, _Request.body, function( _Error, _Result ){
+        var HResult = "" ;
+        if( _Error ){
+            console.log('error');
+            HResult = "error";
+        } else {
+            console.log('success');
+            HResult = JSON.stringify(_Result);
+        }
+        _Response.end(HResult);
+    });
+});
+
 app.get('/events/listEventsForAdmin', function ( _Request, _Response) {
     console.log('listEventsForAdmin');
     EventService.listEventsForAdmin(DataBase, function( _Error, _Result ){
