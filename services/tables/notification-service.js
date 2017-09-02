@@ -35,7 +35,7 @@ module.exports = {
         _DataBase.serialize(
             function(){
                 _DataBase.run("UPDATE NOTIFICATIONS SET CAPTION=?, DESCRIPTION=?, START_DATE=?, EVENT_IDENT=?, LAST_EDITED=? WHERE IDENT=?", 
-                    [ _Notification.CAPTION, _Notification.DESCRIPTION, _Notification.DATE, _Notification.EVENT_IDENT, moment().format("DD.MM.YYYY HH:mm"), _Notification.IDENT], function(_Error){
+                    [ _Notification.CAPTION, _Notification.DESCRIPTION, _Notification.START_DATE, _Notification.EVENT_IDENT, moment().format("DD.MM.YYYY HH:mm"), _Notification.IDENT], function(_Error){
                     
                     var HResult = "";
                     if(_Error === null){
