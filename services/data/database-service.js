@@ -4,6 +4,7 @@ module.exports = {
         _Database.serialize(function() {    
             // Create REFERENTS Table
             _Database.run("CREATE TABLE if not exists REFERENTS (IDENT INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, FORE_NAME TEXT, SURE_NAME TEXT, DESCRIPTION TEXT, RANKING INTEGER)");
+            _Database.run("INSERT INTO REFERENTS (FORE_NAME,SURE_NAME,DESCRIPTION,RANKING) SELECT 'Kein','Referent','',-1 WHERE NOT EXISTS(SELECT R.IDENT FROM REFERENTS as R WHERE IDENT=1)");
             // Create COMPANIES Table
             _Database.run("CREATE TABLE if not exists COMPANIES (SHORT_NAME TEXT UNIQUE NOT NULL PRIMARY KEY, CAPTION TEXT)");
             // Create USERS Table

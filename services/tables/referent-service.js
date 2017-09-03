@@ -63,7 +63,6 @@ module.exports = {
                 });
             }
         );
-        
     },
     listAllReferents( _DataBase, _Callback ){
         _DataBase.all("SELECT * FROM REFERENTS ORDER BY RANKING", function(_Error, _Rows) {  
