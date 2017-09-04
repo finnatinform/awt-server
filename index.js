@@ -106,6 +106,22 @@ app.post('/events/list', function ( _Request, _Response) {
         _Response.end(HResult);
     });
 });
+app.post('/events/single', function ( _Request, _Response) {
+    console.log('singleEvent');
+    console.log(_Request.body);
+    EventService.getSingleEvent(DataBase, _Request.body, function( _Error, _Result ){
+        var HResult = "" ;
+        if( _Error ){
+            console.log('error');
+            HResult = "error";
+        } else {
+            console.log('success');
+            HResult = JSON.stringify(_Result);
+        }
+        _Response.end(HResult);
+    });
+});
+
 app.post('/events/listbreakout', function ( _Request, _Response) {
     console.log('listbreakout');
     console.log(_Request.body);

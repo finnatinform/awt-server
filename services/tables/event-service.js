@@ -14,10 +14,10 @@ module.exports = {
                     if (_Error === null) {
                         var HLastEventIdent = this.lastID;
                         if (_Event.CAN_BE_RESERVED == 1) {
-                            _DataBase.run("INSERT INTO NOTIFICATIONS (CAPTION, DESCRIPTION, START_DATE, EVENT_IDENT, LAST_EDITED,BY_EVENT) SELECT ?,?,?,-1,?,0 WHERE NOT EXISTS ( SELECT 1 FROM NOTIFICATIONS WHERE START_DATE = ? )", ["Feedback", "Klicken Sie hier zum Bewerten", moment(_Event.START_DATE, "DD.MM.YYYY HH:mm").add((parseInt(_Event.DURATION) + 5), 'minutes').format("DD.MM.YYYY HH:mm"), moment().format("DD.MM.YYYY HH:mm"), _Event.START_DATE], function (_Error) {
+                            _DataBase.run("INSERT INTO NOTIFICATIONS (CAPTION, DESCRIPTION, START_DATE, EVENT_IDENT, LAST_EDITED,BY_EVENT,EVENT_DATE) SELECT ?,?,?,-1,?,0,? WHERE NOT EXISTS ( SELECT 1 FROM NOTIFICATIONS WHERE START_DATE = ? )", ["Feedback", "Klicken Sie hier zum Bewerten", moment(_Event.START_DATE, "DD.MM.YYYY HH:mm").add((parseInt(_Event.DURATION) + 5), 'minutes').format("DD.MM.YYYY HH:mm"), moment().format("DD.MM.YYYY HH:mm"), _Event.START_DATE, _Event.START_DATE], function (_Error) {
                                 if (_Error === null) {
                                     if (_Event.HAS_START_NOTIFICATION == 1) {
-                                        _DataBase.run("INSERT INTO NOTIFICATIONS (CAPTION, DESCRIPTION, START_DATE, EVENT_IDENT, LAST_EDITED,BY_EVENT) SELECT ?,?,?,?,?,1", ["Veranstaltung beginnt in Kürze", _Event.CAPTION, moment(_Event.START_DATE, "DD.MM.YYYY HH:mm").subtract(10, 'minutes').format("DD.MM.YYYY HH:mm"), HLastEventIdent, moment().format("DD.MM.YYYY HH:mm")], function (_Error) {
+                                        _DataBase.run("INSERT INTO NOTIFICATIONS (CAPTION, DESCRIPTION, START_DATE, EVENT_IDENT, LAST_EDITED,BY_EVENT,EVENT_DATE) SELECT ?,?,?,?,?,1,''", ["Veranstaltung beginnt in Kürze", _Event.CAPTION, moment(_Event.START_DATE, "DD.MM.YYYY HH:mm").subtract(10, 'minutes').format("DD.MM.YYYY HH:mm"), HLastEventIdent, moment().format("DD.MM.YYYY HH:mm")], function (_Error) {
                                             if (_Error === null) {
                                                 console.log('success');
                                                 _Callback('success');
@@ -124,6 +124,11 @@ module.exports = {
     },
     listEventsForUser(_DataBase, _UserObject, _Callback) {
         _DataBase.all("SELECT e.*,R.FORE_NAME,R.SURE_NAME,0 as USER_HAS_RESERVED, COALESCE(F.RATING,-1) as RATING FROM EVENTS as E LEFT JOIN REFERENTS as R ON E.REFERENT_IDENT = R.IDENT LEFT JOIN FEEDBACKS AS F ON ( E.IDENT=F.EVENT_IDENT AND F.USER_IDENT=?) WHERE E.CAN_BE_RESERVED=0 UNION ALL SELECT e.*,R.FORE_NAME,R.SURE_NAME,(case when L.USER_IDENT ISNULL then 0 else 1 end) as USER_HAS_RESERVED, COALESCE(F.RATING,-1) as RATING FROM USERS_EVENTS_LINK as L LEFT JOIN EVENTS as E ON L.EVENT_IDENT=E.IDENT LEFT JOIN REFERENTS as R ON E.REFERENT_IDENT=R.IDENT LEFT JOIN FEEDBACKS AS F ON ( E.IDENT=F.EVENT_IDENT AND F.USER_IDENT=?) WHERE L.USER_IDENT=?", [_UserObject.IDENT, _UserObject.IDENT, _UserObject.IDENT], function (_Error, _EventRows) {
+            _Callback(_Error, _EventRows);
+        });
+    },
+    getSingleEvent(_DataBase, _UserObject, _Callback) {
+        _DataBase.all("SELECT e.*,R.FORE_NAME,R.SURE_NAME,0 as USER_HAS_RESERVED, COALESCE(F.RATING,-1) as RATING FROM EVENTS as E LEFT JOIN REFERENTS as R ON E.REFERENT_IDENT = R.IDENT LEFT JOIN FEEDBACKS AS F ON ( E.IDENT=F.EVENT_IDENT AND F.USER_IDENT=?) WHERE E.CAN_BE_RESERVED=0 UNION ALL SELECT e.*,R.FORE_NAME,R.SURE_NAME,(case when L.USER_IDENT ISNULL then 0 else 1 end) as USER_HAS_RESERVED, COALESCE(F.RATING,-1) as RATING FROM USERS_EVENTS_LINK as L LEFT JOIN EVENTS as E ON L.EVENT_IDENT=E.IDENT LEFT JOIN REFERENTS as R ON E.REFERENT_IDENT=R.IDENT LEFT JOIN FEEDBACKS AS F ON ( E.IDENT=F.EVENT_IDENT AND F.USER_IDENT=?) WHERE L.USER_IDENT=? AND E.IDENT=?", [_UserObject.IDENT, _UserObject.IDENT, _UserObject.IDENT, _UserObject.EVENT_IDENT], function (_Error, _EventRows) {
             _Callback(_Error, _EventRows);
         });
     },

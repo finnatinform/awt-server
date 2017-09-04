@@ -10,7 +10,7 @@ module.exports = {
         console.log(_Notification);
         _DataBase.serialize(
             function(){
-                _DataBase.run("INSERT INTO NOTIFICATIONS (CAPTION, DESCRIPTION, START_DATE, EVENT_IDENT, LAST_EDITED,BY_EVENT) VALUES (?,?,?,?,?,0)", 
+                _DataBase.run("INSERT INTO NOTIFICATIONS (CAPTION, DESCRIPTION, START_DATE, EVENT_IDENT, LAST_EDITED,BY_EVENT,EVENT_DATE) VALUES (?,?,?,?,?,0,'')", 
                     [ _Notification.CAPTION, _Notification.DESCRIPTION, _Notification.START_DATE, _Notification.EVENT_IDENT, moment().format("DD.MM.YYYY HH:mm") ], function(_Error){
                     
                     var HResult = "";
