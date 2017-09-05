@@ -77,7 +77,7 @@ module.exports = {
         });  
     },
     listAllNotificationsForUser( _DataBase, _UserObject, _Callback ){
-        _DataBase.all("SELECT N.* FROM NOTIFICATIONS as N WHERE N.EVENT_IDENT=-1 AND LAST_EDITED BETWEEN ? AND ? UNION ALL SELECT N.* FROM NOTIFICATIONS AS N LEFT JOIN EVENTS AS E ON E.IDENT=N.EVENT_IDENT WHERE E.CAN_BE_RESERVED=0 AND LAST_EDITED BETWEEN ? AND ? UNION ALL SELECT N.* FROM NOTIFICATIONS as N LEFT JOIN USERS_EVENTS_LINK AS L ON L.EVENT_IDENT=N.EVENT_IDENT WHERE L.USER_IDENT=? AND LAST_EDITED BETWEEN ? AND ?",[ moment(_UserObject.LAST_EDITED, "DD.MM.YYYY HH:mm").format("DD.MM.YYYY HH:mm") , moment().format("DD.MM.YYYY HH:mm"),moment(_UserObject.LAST_EDITED, "DD.MM.YYYY HH:mm").format("DD.MM.YYYY HH:mm") , moment().format("DD.MM.YYYY HH:mm"),_UserObject.IDENT,moment(_UserObject.LAST_EDITED, "DD.MM.YYYY HH:mm").format("DD.MM.YYYY HH:mm") , moment().format("DD.MM.YYYY HH:mm") ], function(_Error, _Rows) {  
+        _DataBase.all("SELECT N.* FROM NOTIFICATIONS as N WHERE N.EVENT_IDENT=-1 AND N.LAST_EDITED BETWEEN ? AND ? UNION ALL SELECT N.* FROM NOTIFICATIONS AS N LEFT JOIN EVENTS AS E ON E.IDENT=N.EVENT_IDENT WHERE E.CAN_BE_RESERVED=0 AND N.LAST_EDITED BETWEEN ? AND ? UNION ALL SELECT N.* FROM NOTIFICATIONS as N LEFT JOIN USERS_EVENTS_LINK AS L ON L.EVENT_IDENT=N.EVENT_IDENT WHERE L.USER_IDENT=? AND N.LAST_EDITED BETWEEN ? AND ?",[ _UserObject.LAST_EDITED, moment().format("DD.MM.YYYY HH:mm"),_UserObject.LAST_EDITED, moment().format("DD.MM.YYYY HH:mm"),_UserObject.IDENT,_UserObject.LAST_EDITED , moment().format("DD.MM.YYYY HH:mm") ], function(_Error, _Rows) {  
             _Callback(_Error, _Rows);
         });  
     },
