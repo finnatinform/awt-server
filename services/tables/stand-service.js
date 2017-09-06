@@ -2,7 +2,7 @@ module.exports = {
     addStand(_DataBase, _Stand, _Callback){
         _DataBase.serialize(
             function(){
-                _DataBase.run("INSERT INTO STANDS (TITLE,DESCRIPTION,LOGO,RANKING) VALUES (?,?,?,?)", [ _Referent.TITLE, _Referent.DESCRIPTION, _Referent.LOGO, _Referent.RANKING ], function(_Error){
+                _DataBase.run("INSERT INTO STANDS (TITLE,DESCRIPTION,LOGO,RANKING) VALUES (?,?,?,?)", [ _Stand.TITLE, _Stand.DESCRIPTION, _Stand.LOGO, _Stand.RANKING ], function(_Error){
                     var HResult = "";
                     if(_Error === null){
                         HResult = 'success';
@@ -16,11 +16,6 @@ module.exports = {
         );        
     },
     changeStand(_DataBase, _Stand, _Callback){
-        if(_Referent.FORE_NAME==="" || _Referent.SURE_NAME===""){
-            console.log('error');
-            _Callback('error');
-            return ;
-        }
         _DataBase.serialize(
             function(){
                 _DataBase.run("UPDATE STANDS SET TITLE=?,SURE_NAME=?,DESCRIPTION=?,LOGO=?,RANKING=? WHERE IDENT=?", [ _Stand.TITLE, _Stand.DESCRIPTION, _Stand.LOGO,_Stand.RANKING, _Stand.IDENT ], function(_Error){
@@ -38,11 +33,6 @@ module.exports = {
         
     },
     deleteStand(_DataBase, _Stand, _Callback){
-        if(_Referent.IDENT===""){
-            console.log('error');
-            _Callback('error');
-            return ;
-        }
         _DataBase.serialize(
             function(){
                 _DataBase.run("DELETE FROM STANDS WHERE IDENT=?", [ _Stand.IDENT ], function(_Error){
