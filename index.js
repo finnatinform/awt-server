@@ -24,6 +24,7 @@ var ReferentService = require('./services/tables/referent-service');
 var CompanyService = require('./services/tables/company-service');
 var PushService = require('./services/tables/notification-service');
 var FeedbackService = require('./services/tables/feedback-service');
+var StandService = require('./services/tables/stand-service');
 
 /* IMPLEMENTATION OF CALLS */
 app.post('/companies/add', function( _Request, _Response){
@@ -210,6 +211,42 @@ app.get('/referents/list', function ( _Request, _Response) {
             HResult = JSON.stringify(_Result);
         }
         _Response.end(HResult);
+    });
+});
+
+app.post('/stands/add', function( _Request, _Response){
+    console.log('addStand');
+    console.log(_Request.body);
+    StandService.addStand(DataBase,_Request.body, function(_Success){
+        _Response.end(_Success);
+    });
+});
+app.post('/stands/change', function( _Request, _Response){
+    console.log('changeStand');
+    console.log(_Request.body);
+    StandService.changeStand(DataBase,_Request.body, function(_Success){
+        _Response.end(_Success);
+    });
+});
+app.get('/stands/list', function ( _Request, _Response) {
+    console.log('listStands');
+    StandService.listAllStands(DataBase,function( _Error, _Result ){
+        var HResult = "" ;
+        if( _Error ){
+            console.log('error');
+            HResult = "error";
+        } else {
+            console.log('success');
+            HResult = JSON.stringify(_Result);
+        }
+        _Response.end(HResult);
+    });
+});
+app.delete('/stands/delete', function( _Request, _Response){
+    console.log('deleteStand');
+    console.log(_Request.body);
+    StandService.deleteStand(DataBase,_Request.body, function(_Success){
+        _Response.end(_Success);
     });
 });
 
